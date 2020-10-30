@@ -17,10 +17,8 @@ const run = async (searchTerm) => {
 const killPort = async (procname, array) => {
   const port = parsePort(procname)
   const pidObject = getPid(array, port)
-  console.log(pidObject)
   try {
-    const { stdout } = await runBash(`kill -9 ${pidObject.pid}`)
-    console.log(stdout)
+    await runBash(`kill -9 ${pidObject.pid}`)
   } catch (err) {
     console.log(err)
   }
