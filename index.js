@@ -1,26 +1,18 @@
 #! /usr/bin/env node
 
-const { getKillProcname } = require('./prompts')
+const { getKillProcname } = require('./src/prompts')
 const { killPort, getProcesses }= require('./src/bash')
 
 const run = async (searchTerm = process.argv[2] || '') => {
   const stdout = await getProcesses()
   const parsedStdout = parseProcesses(stdout, searchTerm)
   if (parsedStdout.length) {
-    const response = await getKillProcname(formatProcesses(parsedStdout))
-    killPort(response.process, parsedStdout)
+    const { process } = await getKillProcname(parsedStdout)
+    killPort(process, parsedStdout)
   } else {
-    console.log('No process matched your search.')
+    console.log('No processes matched your search.')
   }
 }
-
-const formatProcesses = (items) => {
-  return items.map((item) => {
-    return `${item['procname']} on port .${item['port']}`;
-  })
-}
-
-
 
 const parsePort = (port) => {
   return port.split('.').pop()
