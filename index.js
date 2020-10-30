@@ -28,6 +28,10 @@ const getPortUsers = async (path) => {
   }
 }
 
+const parsePort = (port) => {
+  return port.split('.').pop()
+}
+
 const parseUsers = (users, searchTerm) => {
   const parsedUsers = []
   const lines = users.split('\n').filter((el) => {
@@ -41,7 +45,7 @@ const parseUsers = (users, searchTerm) => {
     if (line.includes(searchTerm)) {
       parsedUsers.push({
         proto: splitLine[0],
-        port: splitLine[1],
+        port: parsePort(splitLine[1]),
         pid: splitLine[2],
         procname: splitLine[3]
       })
@@ -52,6 +56,3 @@ const parseUsers = (users, searchTerm) => {
 }
 
 run('mysql')
-
-
-// netstat -Watnlv | grep LISTEN | awk '{"ps -o comm= -p " $9 | getline procname; print cred "proto: " colclr $1 colred " | addr.port: " colclr $4 colred " | pid: " colclr $9 colred " | name: " colclr procname;  }' | column -t -s "|"
