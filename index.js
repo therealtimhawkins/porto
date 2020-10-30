@@ -1,3 +1,4 @@
+const { getKillProcname } = require('./prompts')
 const util = require('util')
 
 const exec = util.promisify(require('child_process').exec)
@@ -8,7 +9,14 @@ const runBash = async (command) => {
 
 const run = async (searchTerm) => {
   const stdout = await getPortUsers()
-  const parseStdout = parseUsers(stdout, searchTerm)
+  const parsedStdout = parseUsers(stdout, searchTerm)
+  const procname = await getKillProcname(formatProcesses(parsedStdout))
+}
+
+const formatProcesses = (items) => {
+  return items.map((item) => {
+    return `${item['procname']} on port ${item['port']}`;
+  })
 }
 
 const getPortUsers = async (path) => {
