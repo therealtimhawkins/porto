@@ -26,7 +26,8 @@ const killPort = async (procname, array) => {
 
 const getProcesses = async () => {
   try {
-    const { stdout } = await runBash(`netstat -Watnlv | grep -E 'LISTEN' | awk '{"ps -o comm= -p " $9 | getline procname; print cred "" $1 " | " $4 " | " $9  " | " procname;  }' | column -t -s " |"`)
+    const { stdout } = await runBash(`
+      netstat -Watnlv | grep -E 'LISTEN' | awk '{"ps -o comm= -p " $9 | getline procname; print cred "" $1 " | " $4 " | " $9  " | " procname;  }' | column -t -s " |"`)
     return stdout
   } catch (err) {
     console.log(err)
