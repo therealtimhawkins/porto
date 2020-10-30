@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const { getKillProcname } = require('./prompts')
 const util = require('util')
 
@@ -7,7 +9,8 @@ const runBash = async (command) => {
   return await exec(command)
 }
 
-const run = async (searchTerm) => {
+const run = async (searchTerm = process.argv[2] || '') => {
+  console.log(searchTerm)
   const stdout = await getPortUsers()
   const parsedStdout = parseUsers(stdout, searchTerm)
   const response = await getKillProcname(formatProcesses(parsedStdout))
@@ -72,4 +75,4 @@ const parseUsers = (users, searchTerm) => {
   return parsedUsers
 }
 
-run('node')
+run()
