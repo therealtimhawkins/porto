@@ -1,36 +1,17 @@
 #! /usr/bin/env node
 
 const { getKillProcname } = require('./prompts')
-const util = require('util')
-
-const exec = util.promisify(require('child_process').exec)
-
-const runBash = async (command) => {
-  return await exec(command)
-}
+const { killPort, getProcesses }= require('./src/bash')
 
 const run = async (searchTerm = process.argv[2] || '') => {
-  const stdout = await getPortUsers()
-  const parsedStdout = parseUsers(stdout, searchTerm)
-  const response = await getKillProcname(formatProcesses(parsedStdout))
-  killPort(response.process, parsedStdout)
-}
-
-const killPort = async (procname, array) => {
-  const port = parsePort(procname)
-  const pidObject = getPid(array, port)
-  try {
-    await runBash(`kill -9 ${pidObject.pid}`)
-  } catch (err) {
-    console.log(err)
+  const stdout = await getProcesses()
+  const parsedStdout = parseProcesses(stdout, searchTerm)
+  if (parsedStdout.length) {
+    const response = await getKillProcname(formatProcesses(parsedStdout))
+    killPort(response.process, parsedStdout)
+  } else {
+    console.log('No process matched your search.')
   }
-}
-
-const getPid = (array, port) => {
-  const result = array.filter(obj => {
-    return obj.port === port
-  })
-  return result[0]
 }
 
 const formatProcesses = (items) => {
@@ -39,20 +20,13 @@ const formatProcesses = (items) => {
   })
 }
 
-const getPortUsers = async (path) => {
-  try {
-    const { stdout } = await runBash(`netstat -Watnlv | grep -E 'LISTEN' | awk '{"ps -o comm= -p " $9 | getline procname; print cred "" $1 " | " $4 " | " $9  " | " procname;  }' | column -t -s " |"`)
-    return stdout
-  } catch (err) {
-    console.log(err)
-  }
-}
+
 
 const parsePort = (port) => {
   return port.split('.').pop()
 }
 
-const parseUsers = (users, searchTerm) => {
+const parseProcesses = (users, searchTerm) => {
   const parsedUsers = []
   const lines = users.split('\n').filter((el) => {
     return el != ''
