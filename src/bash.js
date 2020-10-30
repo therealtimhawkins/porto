@@ -1,4 +1,5 @@
 const util = require('util')
+const parse = require('./parser')
 
 const exec = util.promisify(require('child_process').exec)
 
@@ -15,7 +16,7 @@ const getPid = (array, port) => {
 
 const killPort = async (procname, array) => {
   try {
-    const port = parsePort(procname)
+    const port = parse.port(procname)
     const pidObject = getPid(array, port)
     await runBash(`kill -9 ${pidObject.pid}`)
   } catch (err) {
@@ -23,7 +24,7 @@ const killPort = async (procname, array) => {
   }
 }
 
-const getProcesses = async (path) => {
+const getProcesses = async () => {
   try {
     const { stdout } = await runBash(`netstat -Watnlv | grep -E 'LISTEN' | awk '{"ps -o comm= -p " $9 | getline procname; print cred "" $1 " | " $4 " | " $9  " | " procname;  }' | column -t -s " |"`)
     return stdout
