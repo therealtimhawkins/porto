@@ -10,12 +10,32 @@ const runBash = async (command) => {
 const run = async (searchTerm) => {
   const stdout = await getPortUsers()
   const parsedStdout = parseUsers(stdout, searchTerm)
-  const procname = await getKillProcname(formatProcesses(parsedStdout))
+  const response = await getKillProcname(formatProcesses(parsedStdout))
+  killPort(response.process, parsedStdout)
+}
+
+const killPort = async (procname, array) => {
+  const port = parsePort(procname)
+  const pidObject = getPid(array, port)
+  console.log(pidObject)
+  try {
+    const { stdout } = await runBash(`kill -9 ${pidObject.pid}`)
+    console.log(stdout)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const getPid = (array, port) => {
+  const result = array.filter(obj => {
+    return obj.port === port
+  })
+  return result[0]
 }
 
 const formatProcesses = (items) => {
   return items.map((item) => {
-    return `${item['procname']} on port ${item['port']}`;
+    return `${item['procname']} on port .${item['port']}`;
   })
 }
 
@@ -51,8 +71,7 @@ const parseUsers = (users, searchTerm) => {
       })
     }
   })
-  console.log(parsedUsers)
   return parsedUsers
 }
 
-run('mysql')
+run('node')
