@@ -10,7 +10,6 @@ const runBash = async (command) => {
 }
 
 const run = async (searchTerm = process.argv[2] || '') => {
-  console.log(searchTerm)
   const stdout = await getPortUsers()
   const parsedStdout = parseUsers(stdout, searchTerm)
   const response = await getKillProcname(formatProcesses(parsedStdout))
