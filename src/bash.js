@@ -17,6 +17,7 @@ const killPort = async (message, processes) => {
   try {
     const pidObject = getPid(processes, message)
     await runBash(`kill -9 ${pidObject.pid}`)
+    return pidObject
   } catch (err) {
     console.log(err)
   }

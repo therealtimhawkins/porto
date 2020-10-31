@@ -9,10 +9,10 @@ const run = async (searchTerm = process.argv[2] || '') => {
   const parsedStdout = parse.processes(stdout, searchTerm)
   if (parsedStdout.length) {
     const { message } = await getKillProcname(parsedStdout)
-    console.log(message)
-    killPort(message, parsedStdout)
+    const process = await killPort(message, parsedStdout)
+    console.log(`🔫 Killed process ${process.procname} on port ${process.port}`)
   } else {
-    console.log('No processes matched your search.')
+    console.log('🙈 No processes matched your search')
   }
 }
 
