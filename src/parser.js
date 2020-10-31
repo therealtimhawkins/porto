@@ -2,12 +2,12 @@ const port = (port) => {
   return port.split('.').pop()
 }
 
-const  processes = (users, searchTerm) => {
-  const parsedUsers = []
-  const lines = users.split('\n').filter((el) => {
+const processes = (processesString, searchTerm) => {
+  const parsedProcesses = []
+  const processLines = processesString.split('\n').filter((el) => {
     return el != ''
   })
-  lines.forEach(line => {
+  processLines.forEach(line => {
     const splitLine = line.split(' ').filter((el) => {
       return el != ''
     })
@@ -17,7 +17,7 @@ const  processes = (users, searchTerm) => {
     const procname = splitLine[3]
 
     if (line.includes(searchTerm)) {
-      parsedUsers.push({
+      parsedProcesses.push({
         proto,
         port: port(splitLine[1]),
         pid,
@@ -26,7 +26,7 @@ const  processes = (users, searchTerm) => {
       })
     }
   })
-  return parsedUsers
+  return parsedProcesses
 }
 
 module.exports = {

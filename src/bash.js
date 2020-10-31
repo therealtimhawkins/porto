@@ -1,5 +1,4 @@
 const util = require('util')
-const parse = require('./parser')
 
 const exec = util.promisify(require('child_process').exec)
 
@@ -7,16 +6,16 @@ const runBash = async (command) => {
   return await exec(command)
 }
 
-const getPid = (array, message) => {
-  const result = array.filter(obj => {
-    return obj.message === message
+const getPid = (processes, message) => {
+  const process = processes.filter(process => {
+    return process.message === message
   })
-  return result[0]
+  return process[0]
 }
 
-const killPort = async (message, array) => {
+const killPort = async (message, processes) => {
   try {
-    const pidObject = getPid(array, message)
+    const pidObject = getPid(processes, message)
     await runBash(`kill -9 ${pidObject.pid}`)
   } catch (err) {
     console.log(err)
