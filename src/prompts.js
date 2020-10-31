@@ -1,8 +1,8 @@
 const inquirer = require('inquirer')
 
-const formatProcesses = (items) => {
-  return items.map((item) => {
-    return item.message;
+const formatProcesses = (processes) => {
+  return processes.map((process) => {
+    return process.message;
   })
 }
 
