@@ -10,7 +10,7 @@ const getKillProcname = (processes) => {
   return inquirer.prompt({
     name: 'message',
     type: 'list',
-    message: 'What process would you like to kill?',
+    message: 'Which process would you like to kill?',
     choices: formatProcesses(processes)
   })
 }

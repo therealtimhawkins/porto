@@ -6,7 +6,7 @@
 
 ## Features
 
-- Search for processes running on your ports
+- Search for local processes by `process name`, `port` and `pid`
 - Select and kill the process
 
 ## Install

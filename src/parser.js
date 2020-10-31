@@ -1,3 +1,5 @@
+const chalk = require('chalk')
+
 const port = (port) => {
   return port.split('.').pop()
 }
@@ -22,7 +24,7 @@ const processes = (processesString, searchTerm) => {
         port: port(splitLine[1]),
         pid,
         procname,
-        message: `Process ${procname} on port: ${port(splitLine[1])}, pid: ${pid}`
+        message: `Process ${chalk.magenta(procname)} on port: ${chalk.magenta(port(splitLine[1]))}, pid: ${chalk.magenta(pid)}`
       })
     }
   })
