@@ -12,12 +12,17 @@ const  processes = (users, searchTerm) => {
       return el != ''
     })
 
+    const proto = splitLine[0]
+    const pid = splitLine[2]
+    const procname = splitLine[3]
+
     if (line.includes(searchTerm)) {
       parsedUsers.push({
-        proto: splitLine[0],
+        proto,
         port: port(splitLine[1]),
-        pid: splitLine[2],
-        procname: splitLine[3]
+        pid,
+        procname,
+        message: `Process ${procname} on port: ${port(splitLine[1])}, pid: ${pid}`
       })
     }
   })

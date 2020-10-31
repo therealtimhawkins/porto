@@ -2,13 +2,13 @@ const inquirer = require('inquirer')
 
 const formatProcesses = (items) => {
   return items.map((item) => {
-    return `${item['procname']} on port .${item['port']}`;
+    return item.message;
   })
 }
 
 const getKillProcname = (processes) => {
   return inquirer.prompt({
-    name: 'process',
+    name: 'message',
     type: 'list',
     message: 'What process would you like to kill?',
     choices: formatProcesses(processes)

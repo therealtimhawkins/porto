@@ -7,17 +7,16 @@ const runBash = async (command) => {
   return await exec(command)
 }
 
-const getPid = (array, port) => {
+const getPid = (array, message) => {
   const result = array.filter(obj => {
-    return obj.port === port
+    return obj.message === message
   })
   return result[0]
 }
 
-const killPort = async (procname, array) => {
+const killPort = async (message, array) => {
   try {
-    const port = parse.port(procname)
-    const pidObject = getPid(array, port)
+    const pidObject = getPid(array, message)
     await runBash(`kill -9 ${pidObject.pid}`)
   } catch (err) {
     console.log(err)
