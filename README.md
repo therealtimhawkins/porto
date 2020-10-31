@@ -9,6 +9,8 @@
 - Search for local processes by `process name`, `port` and `pid`
 - Select and kill the process
 
+![](porto.gif)
+
 ## Install
 
 You can install the CLI by cloning this repo `git clone https://github.com/therealtimhawkins/porto.git` and using `npm` by running the following command.
@@ -16,3 +18,5 @@ You can install the CLI by cloning this repo `git clone https://github.com/there
 ```sh
 npm run install
 ```
+
+## Usage
