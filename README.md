@@ -13,10 +13,8 @@
 
 ## Install
 
-You can install the CLI by cloning this repo `git clone https://github.com/therealtimhawkins/porto.git` and using `npm` by running the following command.
+You can install the CLI by cloning this repo `git clone https://github.com/therealtimhawkins/porto.git` and use `npm` by running the following command.
 
 ```sh
 npm run install
 ```
-
-## Usage
