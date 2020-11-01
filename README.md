@@ -9,7 +9,9 @@
 - Search for local processes by `process name`, `port` and `pid`
 - Select and kill the process
 
+<p align="center">
 ![](porto.gif)
+</p>
 
 ## Install
 
