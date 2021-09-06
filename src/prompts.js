@@ -1,17 +1,19 @@
-const inquirer = require('inquirer')
+const inquirer = require("inquirer")
 
 const formatProcesses = (processes) => {
-  return processes.map((process) => {
-    return process.message;
+  const formattedProcesses = processes.map((process) => {
+    return process.message
   })
+  formattedProcesses.push("exit")
+  return formattedProcesses
 }
 
 const getKillProcname = (processes) => {
   return inquirer.prompt({
-    name: 'message',
-    type: 'list',
-    message: 'Which process would you like to kill?',
-    choices: formatProcesses(processes)
+    name: "message",
+    type: "list",
+    message: "Which process would you like to kill?",
+    choices: formatProcesses(processes),
   })
 }
 
